@@ -6,7 +6,7 @@
 @function convertV2E
 @filename convertV2E.php
  **/
-function convertV2E($str, $tolower = false, $callby = '') {
+function convertV2E($str, $tolower = false, $callby = '', $slug = false) {
 	$chars = array(
 		'a'	=>	array('ấ','ầ','ẩ','ẫ','ậ','Ấ','Ầ','Ẩ','Ẫ','Ậ','ắ','ằ','ẳ','ẵ','ặ','Ắ','Ằ','Ẳ','Ẵ','Ặ','á','à','ả','ã','ạ','â','ă','Á','À','Ả','Ã','Ạ','Â','Ă','å','Ä','ä','aÌ'),
 		'e'	=>	array('ế','ề','ể','ễ','ệ','Ế','Ề','Ể','Ễ','Ệ','é','è','ẻ','ẽ','ẹ','ê','É','È','Ẻ','Ẽ','Ẹ','Ê','ë','eÌ'),
@@ -52,6 +52,12 @@ function convertV2E($str, $tolower = false, $callby = '') {
 		$str = str_replace(',', '', $str);
 		$str = str_replace("'",' ',$str);
 		$str = str_replace('"',' ',$str);
+	}
+	if ($slug) {
+		$str = trim($str);
+		$str = preg_replace(array("/[^a-zA-Z0-9 -]/","/[ -]+/","/^-|-$/"), array('','-',''), htmlspecialchars_decode($str));
+	} else {
+		$str = trim($str);
 	}
 	return $str;
 }
